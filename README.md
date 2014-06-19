@@ -1,7 +1,7 @@
 Create active url from plain url
 ==========================
 
-Small Codeigniter helper for create active links from plain url in any text.
+Small Codeigniter helper for create active links from plain url and/or emails in any text.
 
 The code is released under an MIT license.
 
