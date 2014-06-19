@@ -37,14 +37,27 @@ if(!function_exists('activeUrl')) {
         $rexQuery    = '(\?[!$-/0-9:;=@_\':;!a-zA-Z\x7f-\xff]+?)?';
         $rexFragment = '(#[!$-/0-9:;=@_\':;!a-zA-Z\x7f-\xff]+?)?';
 
-        return preg_replace_callback("&\\b$rexProtocol$rexDomain$rexPort$rexPath$rexQuery$rexFragment(?=[?.!,;:\"]?(\s|$))&", 'au_callback', htmlspecialchars($text));
+        $emailsText = activeEmail($text);
+
+        $urlText = preg_replace_callback("&\\b$rexProtocol$rexDomain$rexPort$rexPath$rexQuery$rexFragment(?=[?.!,;:\"]?(\s|$))&", 'au_callback', htmlspecialchars($emailsText));
+
+        return html_entity_decode($urlText);
 
     }
 
+    //add links
     function au_callback($match){
 
         $completeUrl = $match[1] ? $match[0] : "http://{$match[0]}";
         return '<a href="' . $completeUrl . '" target="_blank">' . $match[2] . $match[3] . $match[4] . '</a>';
+    }
+
+    //add mailto:
+    function activeEmail($text){
+
+        $regex = '/(\S+@\S+\.\S+)/';
+        $replace = '<a href="mailto:$1">$1</a>';
+        return preg_replace($regex, $replace, $text);
     }
 
 }

@@ -1,2 +1,2 @@
-active-url-from-plain-text
+Create active url from plain url
 ==========================
